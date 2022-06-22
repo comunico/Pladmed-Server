@@ -11,7 +11,7 @@ from smtplib import SMTPException
 from threading import Thread
 import logging
 from passlib.hash import pbkdf2_sha256 as secure_password
-import traceback
+import traceback, os
 
 auth = Blueprint('auth', __name__)
 
@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 @auth.route('/forgot', methods=["POST"])
 def forgot():
     data = request.get_json(force=True)
-    url_base = request.url_root
+    
 
     try:
         user = current_app.db.users.find_user(data["email"])
@@ -29,11 +29,14 @@ def forgot():
 
         access_token = current_app.token.create_token(user_data)
 
+        front_ip = os.getenv('FRONT_IP', '127.0.0.1')
+        front_port = os.getenv('FRONT_PORT', '3000')
+
         msg = Message()
         msg.subject = "Reset de password"
         msg.recipients = [data["email"]]
         msg.sender = 'Pladmed'
-        msg.body = url_base + 'reset-password/' + access_token
+        msg.body = front_ip + ":" + front_port + '/reset-password/' + access_token
         with current_app.app_context():
             mail = Mail()
             mail.send(msg)

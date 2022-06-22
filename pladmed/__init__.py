@@ -39,12 +39,20 @@ def create_app(test_config=None):
         MONGO_DB=os.getenv('MONGO_DATABASE', 'pladmed')
     )
     app.config['MAIL_SERVER']=os.getenv('MAIL_SERVER', 'smtp.gmail.com')
-    app.config['MAIL_PORT'] = os.getenv('MAIL_PORT', 587)
+    app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))
     app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME', 'nicolas.g.calvo@gmail.com')
     app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD', 'zjmipowaztropdfn')
-    app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', True)
-    app.config['MAIL_USE_SSL'] = os.getenv('MAIL_USE_SSL', False)
-    app.config['MAIL_DEBUG'] = os.getenv('MAIL_DEBUG', True)
+    app.config['MAIL_DEBUG'] = True
+
+    app.config['MAIL_USE_TLS'] = bool(os.getenv('MAIL_USE_TLS', 'True'))
+    mail_ssl = os.getenv('MAIL_USE_SSL', 'False')
+    if (mail_ssl == 'False'): 
+        app.config['MAIL_USE_SSL'] = False
+        print('Mail SSL: ' + 'False')
+    else:
+        app.config['MAIL_USE_SSL'] = True
+        print('Mail SSL: ' + 'True')
+
     mail = Mail(app)
 
     if test_config is None:
