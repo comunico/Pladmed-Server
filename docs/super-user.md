@@ -10,9 +10,10 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 849593f8685d        chrony              "tini -- /usr/local/…"   4 minutes ago       Up 4 minutes        123/udp                  chrony
 17d918db4681        server:latest       "./docker-entrypoint…"   4 minutes ago       Up 4 minutes        0.0.0.0:5000->5000/tcp   pladmed-server
 ```
-The value which identifies the container is `CONTAINER ID`. For this pladmed-server instance, that value is `17d918db4681`. So, to attach a shell to it:
+The value which identifies the container is `CONTAINER ID` or `NAMES`. For this pladmed-server instance, that value is `17d918db4681` by Container_Id or `pladmed-server` by Name. So, to attach a shell to it:
 
 `docker exec -it 17d918db4681 bash`
+`docker exec -it pladmed-server bash`
 
 Once inside the container shell, the command for creating a super user is as follows:
 

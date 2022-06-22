@@ -58,7 +58,7 @@ LOG_FILE=server.log #Log file location
 
 Inside the  `docs/endpoints` directory, there's a .yaml [Swagger](https://swagger.io/tools/swagger-ui/) file which can be used for viewing and testing the web API endpoints.
 
-Alternatively, in the same directory, there is a [Postman](https://www.postman.com/) collection, which can be imported and used in Postman.
+Alternatively, in the same directory, there is a [Postman](https://www.postman.com/) collection and environment, which can be imported and used in Postman.
 
 ## Additional documentation
 
