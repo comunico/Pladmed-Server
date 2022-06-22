@@ -1,9 +1,5 @@
 # Pladmed backend
 
-[![Build Status](https://travis-ci.org/CoNexDat/pladmed-backend.svg?branch=master)](https://travis-ci.org/CoNexDat/pladmed-backend)
-
-[![codecov](https://codecov.io/gh/CoNexDat/pladmed-backend/branch/master/graph/badge.svg?token=YTU6E27H7T)](https://codecov.io/gh/CoNexDat/pladmed-backend)
-
 - [Pladmed backend](#pladmed-backend)
   - [How to run locally](#how-to-run-locally)
   - [Configuration](#configuration)
@@ -11,7 +7,7 @@
   - [Additional documentation](#additional-documentation)
 
 ## How to run locally
-You can run everything through Docker:
+You can run everything through Docker. You need docker and docker-compose to run the application:
 
 - make start: Starts the server
 - make debug: Starts the server and watch for logs
