@@ -1,0 +1,417 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://localhost:5000'
+    description: ''
+    variables: {}
+info:
+  version: 55ff2a52-75ff-4308-849f-3e9ec17666b3
+  title: PladMed
+  description: ''
+  termsOfService: ''
+  contact: {}
+  license:
+    name: ''
+paths:
+  /traceroute:
+    post:
+      summary: Traceroute
+      operationId: Traceroute
+      parameters:
+        - name: access_token
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '201':
+          description: 'Created'
+        '400':
+          description: 'Invalid parameters'
+        '401':
+          description: 'Unauthorized'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operation: 
+                  type: string
+                  description: 'traceroute'
+                probes:
+                  type: array
+                  items:
+                    type: string
+                  description: 'List of probes ids'
+                params:
+                  type: object
+                  properties:
+                    cron:
+                      type: string
+                      description: 'Cron execution (cron format)'
+                    stop_time:
+                      type: string
+                      description: 'Cron execution stop time (dd/MM/yyyy HH:mm)'
+                    times_per_minute:
+                      type: integer
+                      description: 'How many times it will be executed in a minute'
+                    ips:
+                      type: array
+                      items:
+                        type: string
+                      description: List of ips
+                    fqdns:
+                      type: array
+                      items:
+                        type: string
+                      description: List of fqdns
+                    confidence:
+                      type: number
+                      description: '-c [Between 0 and 0.99]'
+                    method:
+                      type: string
+                      description: "-P ['udp-paris', 'icmp-paris', 'icp']"
+                    dport:
+                      type: integer
+                      description: "-d [Greater than zero]"
+                    firsthop:
+                      type: integer
+                      description: "-f [Greater than zero]"
+                    maxttl:
+                      type: integer
+                      description: "-m [Between 1 and 255]"
+                    attempts:
+                      type: integer
+                      description: "-q [Between 1 and 10]"
+                    sport:
+                      type: integer
+                      description: "-s [Greater than zero]"
+                    wait:
+                      type: integer
+                      description: "-w [Between 1 and 20]"
+                    wait-probe:
+                      type: integer
+                      description: "-W [Between 0 and 100]"
+              example:
+                operation: traceroute
+                probes:
+                  - 6047c91ef391a23bca4c31d8
+                params:
+                  cron: '* * * * *'
+                  times_per_minute: 1
+                  stop_time: '07/03/2021 05:56'
+                  firsthop: 5
+                  ips:
+                    - 179.60.195.36
+                  fqdns:
+                    - ar.yahoo.com
+  /dns:
+    post:
+      summary: DNS
+      operationId: DNS
+      parameters:
+        - name: access_token
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '201':
+          description: 'Created'
+        '400':
+          description: 'Invalid parameters'
+        '401':
+          description: 'Unauthorized'
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                operation: 
+                  type: string
+                  description: 'dns'
+                probes:
+                  type: array
+                  items:
+                    type: string
+                  description: 'List of probes ids'
+                params:
+                  type: object
+                  properties:
+                    cron:
+                      type: string
+                      description: 'Cron execution (cron format)'
+                    stop_time:
+                      type: string
+                      description: 'Cron execution stop time (dd/MM/yyyy HH:mm)'
+                    times_per_minute:
+                      type: integer
+                      description: 'How many times it will be executed in a minute'
+                    ips:
+                      type: array
+                      items:
+                        type: string
+                      description: List of ips, must be empty or null
+                    fqdns:
+                      type: array
+                      items:
+                        type: string
+                      description: List of fqdns
+                    address: 
+                      type: string
+                      description: -b
+                    name: 
+                      type: array
+                      items:
+                        type: string
+                      description: -q
+                    type:
+                      type: string
+                      description: '-P ["a", "any", "axfr", "hinfo", "mx", "ns", "soa", "txt"]'
+              example:
+                operation: dns
+                probes:
+                  - 6047e7202a003d6b564ab99a
+                params:
+                  cron: '* * * * *'
+                  times_per_minute: 1
+                  stop_time: '09/03/2021 23:59'
+                  fqns:
+                    - www.google.com
+                    - ar.yahoo.com
+  /ping:
+    post:
+      summary: Ping
+      operationId: Ping
+      parameters:
+        - name: access_token
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '201':
+          description: 'Created'
+        '400':
+          description: 'Invalid parameters'
+        '401':
+          description: 'Unauthorized'
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                operation: 
+                  type: string
+                  description: 'dns'
+                probes:
+                  type: array
+                  items:
+                    type: string
+                  description: 'List of probes ids'
+                params:
+                  type: object
+                  properties:
+                    cron:
+                      type: string
+                      description: 'Cron execution (cron format)'
+                    stop_time:
+                      type: string
+                      description: 'Cron execution stop time (dd/MM/yyyy HH:mm)'
+                    times_per_minute:
+                      type: integer
+                      description: 'How many times it will be executed in a minute'
+                    ips:
+                      type: array
+                      items:
+                        type: string
+                      description: List of ips
+                    fqdns:
+                      type: array
+                      items:
+                        type: string
+                      description: List of fqdns
+                    probecount:
+                      type: integer
+                      description: '-c [Between 1 and 100]'
+                    icmp-sum:
+                      type: integer
+                      description: '-C [greater than zero]'
+                    dport:
+                      type: integer
+                      description: '-d [greater than zero]'
+                    sport:
+                      type: integer
+                      description: '-F [greater than zero]'
+                    wait:
+                      type: integer
+                      description: '-c [Between 1 and 20]'
+                    method:
+                      type: string
+                      description: '-P ["icmp-echo", "icmp-time", "tcp-syn", "tcp-ack", "tcp-ack-sport", "udp", "udp-dport"]'
+                    size:
+                      type: integer
+                      description: '-s [Between 1 and 255]'
+                    timeout:
+                      type: integer
+                      description: '-W [Between 0 and 100]'
+              example:
+                operation: ping
+                probes:
+                  - 6047e38e2a003d6b564ab999
+                params:
+                  cron: '* * * * *'
+                  times_per_minute: 1
+                  stop_time: '11/03/2021 23:59'
+                  fqdns:
+                    - www.google.com
+                    - ar.yahoo.com
+                  ips:
+                    - 104.21.234.2
+                  result_format: json
+  /register:
+    post:
+      summary: Register
+      operationId: Register
+      parameters: []
+      responses:
+        '201':
+          description: 'Created'
+        '400':
+          description: 'Invalid parameters'
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User email
+                password:
+                  type: string
+                  description: User password
+              example:
+                email: deramos@fi.uba.ar
+                password: myNewPassword1234
+  /login:
+    post:
+      summary: Login
+      operationId: Login
+      parameters: []
+      responses:
+        '200':
+          description: 'OK'
+        '404':
+          description: 'User not found'
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User email
+                password:
+                  type: string
+                  description: User password
+              example:
+                email: deramos@fi.uba.ar
+                password: myNewPassword1234
+  /probes:
+    get:
+      summary: Get Probes
+      operationId: GetProbes
+      parameters: []
+      responses:
+        '200':
+          description: 'OK'
+        '401':
+          description: 'Unauthorized'
+    post:
+      summary: Register Probe
+      operationId: RegisterProbe
+      parameters:
+        - name: access_token
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                location:
+                  type: object
+                  properties:
+                    latitude:
+                      type: number
+                      description: Probe location latitude
+                    longitude:
+                      type: number
+                      description: Probe location longitude
+              example:
+                location:
+                  latitude: -34.6158037
+                  logitude: -58.5033383
+                    
+      responses:
+        '200':
+          description: 'OK'
+        '401':
+          description: 'Unauthorized'
+  /users/me:
+    get:
+      summary: User
+      description: Get user description
+      operationId: User
+      parameters:
+        - name: access_token
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: 'Unauthorized'
+  /operation:
+    get:
+      summary: Operation
+      operationId: Operation
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: ''
+        '404':
+          description: 'Not found'
+components:
+  parameters:
+    id:
+      name: id
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: operationId
+security: []
+tags: []
