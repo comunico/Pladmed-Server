@@ -5,6 +5,8 @@ from pladmed.utils.response import error_response, HTTP_NO_AUTH
 def parse_user(func, superuser, *args, **kwargs):
     access_token = request.headers.get("access_token")
 
+    print("Access Token: ", access_token)
+
     if access_token is None:
         return error_response(
             HTTP_NO_AUTH, "No authorization to access this content"
@@ -12,8 +14,10 @@ def parse_user(func, superuser, *args, **kwargs):
 
     try:
         data = current_app.token.identity(access_token)
+        print("Data: ", data)
 
         user = current_app.db.users.find_user(data["email"])
+        print("User: ", user)
 
         if not user or (superuser and not user.is_superuser):
             return error_response(
