@@ -45,6 +45,8 @@ def create_operation(name, data, credits_for_probes, credits_per_probe, result_f
 
         available_probes = get_available_probes(probes, credits_per_probe)
 
+        print("Probes disponibles: ", available_probes)
+
         if len(available_probes) == 0:
             return error_response(HTTP_NOT_FOUND, "No available probes")
 
@@ -52,6 +54,8 @@ def create_operation(name, data, credits_for_probes, credits_per_probe, result_f
 
         if user.credits - total_credits < 0:
             return error_response(HTTP_BAD_REQUEST, "Not enough credits")
+
+        print("Se persistira la operacion")
 
         operation = current_app.db.operations.create_operation(
             name,
@@ -63,6 +67,8 @@ def create_operation(name, data, credits_for_probes, credits_per_probe, result_f
         )
 
         operation_data = operation.public_data()
+
+        print("Se modificarán los creditos del usuario")
 
         current_app.db.users.change_credits(user, user.credits - total_credits)
 
@@ -104,8 +110,12 @@ def traceroute():
 def ping():
     data = request.get_json(force=True)
 
+    print("Data: ", data)
+
     if not validate_ping(data):
         return error_response(HTTP_BAD_REQUEST, "Invalid data provided")
+
+    print("Se validó la data")
 
     total_destinations = count_destinations(data["params"])
 
@@ -115,6 +125,8 @@ def ping():
         int(data["params"]["times_per_minute"]),
         total_destinations
     )
+
+    print("Se creará la operacion")
 
     return create_operation(
         "ping",
@@ -161,6 +173,8 @@ def count_destinations(params):
 
 
 def do_operation(operation, probes, data, credits_per_probe):
+    print("Se enviarán los datos al probe")
+
     data_to_send = data.copy()
 
     del data_to_send["probes"]
@@ -169,6 +183,7 @@ def do_operation(operation, probes, data, credits_per_probe):
 
     for probe in data["probes"]:
         if probe in current_app.probes:
+            print("Se emite la data por el socket")
             socketio.emit(
                 operation,
                 data_to_send,
