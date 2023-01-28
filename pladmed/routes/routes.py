@@ -68,9 +68,11 @@ def create_operation(name, data, credits_for_probes, credits_per_probe, result_f
 
         operation_data = operation.public_data()
 
-        print("Se modificarán los creditos del usuario")
+        print("Se modificaran los creditos del usuario")
 
         current_app.db.users.change_credits(user, user.credits - total_credits)
+
+        print("Se modificaron los creditos del usuario")
 
         do_operation(name, available_probes, operation_data, credits_for_probes)
 
@@ -115,7 +117,7 @@ def ping():
     if not validate_ping(data):
         return error_response(HTTP_BAD_REQUEST, "Invalid data provided")
 
-    print("Se validó la data")
+    print("La data es valida")
 
     total_destinations = count_destinations(data["params"])
 
@@ -126,7 +128,7 @@ def ping():
         total_destinations
     )
 
-    print("Se creará la operacion")
+    print("Se creara la operacion")
 
     return create_operation(
         "ping",
