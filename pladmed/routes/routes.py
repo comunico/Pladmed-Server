@@ -147,6 +147,8 @@ def dns():
     if not validate_dns(data):
         return error_response(HTTP_BAD_REQUEST, "Invalid data provided")
 
+    print("Se valido DNS")
+
     total_destinations = count_destinations(data["params"])
 
     [credits_for_probe, credits_per_probe] = calculate_credits_dns(
@@ -156,6 +158,8 @@ def dns():
         total_destinations
     )
 
+    print("Se creara la operacion")
+    
     return create_operation(
         "dns",
         data,
