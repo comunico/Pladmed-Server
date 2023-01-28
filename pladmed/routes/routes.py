@@ -39,18 +39,23 @@ def get_available_probes(probes, credits_):
 
 def create_operation(name, data, credits_for_probes, credits_per_probe, result_format):
     try:
+        print("Dentro de la funcion create_operation")
         user = request.user
+        print("REQUEST USER: ", request.user)
 
         probes = current_app.db.probes.find_selected_probes(data["probes"])
+        print("PROBES: ", probes)
 
         available_probes = get_available_probes(probes, credits_per_probe)
-
-        print("Probes disponibles: ", available_probes)
+        print("AVAILABLE PROBES: ", available_probes)
 
         if len(available_probes) == 0:
             return error_response(HTTP_NOT_FOUND, "No available probes")
 
         total_credits = credits_per_probe * len(available_probes)
+
+        print("TOTAL CREDITS: ", total_credits)
+        print("USER CREDITS: ", user.credits)
 
         if user.credits - total_credits < 0:
             return error_response(HTTP_BAD_REQUEST, "Not enough credits")
@@ -159,7 +164,7 @@ def dns():
     )
 
     print("Se creara la operacion")
-    
+
     return create_operation(
         "dns",
         data,

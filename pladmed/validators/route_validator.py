@@ -83,7 +83,7 @@ def validate_operation(data, valid_params):
     valido3 = validate_destinations(data["params"])
     valido4 = validate_timing_params(data["params"])
 
-    print("Resultado de las validacopnes = ", valido1, valido2, valido3, valido4)
+    print("Resultado de las validaciones : ", valido1, valido2, valido3, valido4)
     return valido1 and valido2 and valido3 and valido4
 #    return validate_probes(data["probes"]) and validate_params(data["params"], valid_params) and validate_destinations(
 #        data["params"]) and validate_timing_params(data["params"])
