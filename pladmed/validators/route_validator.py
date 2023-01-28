@@ -33,16 +33,22 @@ def validate_destinations(data):
         total_destinations += len(data["fqdns"])
     if "ips" in data:
         total_destinations += len(data["ips"])
+
+    print("Total de destinos: ", total_destinations)
     return total_destinations != 0
 
 
 def validate_timing_params(data):
+    print("Se validan los parametros de tiempo")
     if "cron" not in data:
+        print("Falta el parametro cron")
         return False
     if not croniter.is_valid(data["cron"]):
+        print("La expresion de cron es invalida")
         return False
 
     if "stop_time" not in data:
+        print("Falta el parametro stop_time")
         return False
     try:
         datetime.datetime.strptime(data["stop_time"], '%d/%m/%Y %H:%M')
@@ -50,6 +56,7 @@ def validate_timing_params(data):
         return False
 
     if "times_per_minute" not in data:
+        print("Falta el parametro times_per_minute")
         return False
     return isinstance(data["times_per_minute"], numbers.Number)
 
@@ -70,8 +77,16 @@ def validate_operation(data, valid_params):
     print("Se comprueba si hay probes en la data")
     if "probes" not in data or "params" not in data:
         return False
-    return validate_probes(data["probes"]) and validate_params(data["params"], valid_params) and validate_destinations(
-        data["params"]) and validate_timing_params(data["params"])
+        
+    valido1 = validate_probes(data["probes"])
+    valido2 = validate_params(data["params"], valid_params)
+    valido3 = validate_destinations(data["params"])
+    valido4 = validate_timing_params(data["params"])
+
+    print("Resultado de las validacopnes = ", valido1, valido2, valido3, valido4)
+    return valido1 and valido2 and valido3 and valido4
+#    return validate_probes(data["probes"]) and validate_params(data["params"], valid_params) and validate_destinations(
+#        data["params"]) and validate_timing_params(data["params"])
 
 
 def validate_user_data_present(data):
