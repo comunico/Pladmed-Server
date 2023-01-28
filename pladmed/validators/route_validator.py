@@ -7,9 +7,12 @@ import datetime
 
 
 def validate_params(data, valid_params):
+    print("Se validan los parametros")
     try:
         for param in data:
+            print("Se valida el parametro: ", param)
             if param in valid_params:
+                print("El parametro es dentro de los parametros validos: ", param)
                 validator = valid_params[param]
                 validator.validate(data[param])
         return True
@@ -63,6 +66,7 @@ def validate_dns(data):
 
 
 def validate_operation(data, valid_params):
+    print("Se comprueba si hay probes en la data")
     if "probes" not in data or "params" not in data:
         return False
     return validate_probes(data["probes"]) and validate_params(data["params"], valid_params) and validate_destinations(
