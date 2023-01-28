@@ -25,6 +25,7 @@ def validate_probes(data):
 
 
 def validate_destinations(data):
+    print("Se validan los destinos")
     if "fqdns" not in data and "ips" not in data:
         return False
     total_destinations = 0
