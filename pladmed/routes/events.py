@@ -47,6 +47,8 @@ def on_disconnect():
 
 @socketio.on('results')
 def on_results(data):
+    print("Se recibió RESULTS en el socket")
+    print("Data de RESULTS: ", data)
     probe = find_probe_by_session(request.sid)
 
     # Probe suddenly got disconnected so i can't find it's model
@@ -86,6 +88,7 @@ def on_results(data):
 
 @socketio.on('new_operation')
 def on_new_operation(data):
+    print("Se emite NEW_OPERATION en el socket")
     probe = find_probe_by_session(request.sid)
 
     # Probe suddenly got disconnected so i can't find it's model
@@ -98,6 +101,7 @@ def on_new_operation(data):
 
 @socketio.on('finish_operation')
 def on_finish_operation(data):
+    print("Se emite FINISH_OPERATION en el socket")
     probe = find_probe_by_session(request.sid)
 
     # Probe suddenly got disconnected so i can't find it's model

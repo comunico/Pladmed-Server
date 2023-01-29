@@ -194,7 +194,7 @@ def do_operation(operation, probes, data, credits_per_probe):
 
     for probe in data["probes"]:
         if probe in current_app.probes:
-            print("Se emite la data por el socket")
+            print("Se emite la data por el socket: ", operation, data_to_send, current_app.probes[probe].sid)
             socketio.emit(
                 operation,
                 data_to_send,
