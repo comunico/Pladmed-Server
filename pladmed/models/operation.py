@@ -1,5 +1,5 @@
 class Operation:
-    def __init__(self, _id, operation, params, probes, credits_, result_format):
+    def __init__(self, _id, operation, params, probes, credits_, result_format, creation_date):
         self._id = _id
         self.operation = operation
         self.probes = probes
@@ -7,6 +7,7 @@ class Operation:
         self.results = []
         self.credits = credits_
         self.result_format = result_format
+        self.creation_date = creation_date
 
     def public_data(self):
         data = self.__dict__.copy()

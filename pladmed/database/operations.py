@@ -5,20 +5,19 @@ from pladmed.models.operation import Operation
 from pladmed.models.probe import Probe
 from bson.objectid import ObjectId
 from pladmed.exceptions import InvalidOperation
-
-
 class OperationsCollection:
     def __init__(self, db):
         self.operationsCol = db.operations
 
-    def create_operation(self, operation, params, probes, user, credits_, format_):
+    def create_operation(self, operation, params, probes, user, credits_, format_, creation_date):
         data = {
             "operation": operation,
             "params": params,
             "probes": [ObjectId(probe.identifier) for probe in probes],
             "owner": ObjectId(user._id),
             "credits": credits_,
-            "result_format": format_
+            "result_format": format_,
+            "creation_date": creation_date
         }
 
         _id = self.operationsCol.insert_one(data)
@@ -29,7 +28,8 @@ class OperationsCollection:
             params,
             probes,
             credits_,
-            format_
+            format_,
+            creation_date
         )
 
         return op

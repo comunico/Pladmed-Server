@@ -3,6 +3,7 @@ from pladmed.routes import api
 from flask_socketio import emit
 from pladmed.models.user import User
 from pladmed.models.probe import Probe
+from datetime import datetime
 from pladmed.utils.decorators import user_protected, superuser
 from pladmed.utils.response import (
     error_response, HTTP_CREATED, HTTP_OK, HTTP_NOT_FOUND, HTTP_BAD_REQUEST,
@@ -62,13 +63,16 @@ def create_operation(name, data, credits_for_probes, credits_per_probe, result_f
 
         print("Se persistira la operacion")
 
+        creation_date = datetime.now()
+
         operation = current_app.db.operations.create_operation(
             name,
             data["params"],
             available_probes,
             user,
             total_credits,
-            result_format
+            result_format, 
+            creation_date
         )
 
         operation_data = operation.public_data()
